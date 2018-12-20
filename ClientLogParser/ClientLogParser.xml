@@ -1,0 +1,679 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClientLogParser</name>
+    </assembly>
+    <members>
+        <member name="T:ClientLogParser.ClientLogParser">
+            <summary>
+            Provides methods and events for parsing/handling new clientlog entries.
+            </summary>
+        </member>
+        <member name="P:ClientLogParser.ClientLogParser.Interval">
+            <summary>
+            Time in milliseconds after which to check for new entries in the clientlog. (Default: 1500)
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.#ctor(System.String,ClientLogParser.Parsers.ParserCollection)">
+            <summary>
+            Initializes a parser.
+            </summary>
+            <param name="clientLogPath">Path to the Client.txt of Path of Exile</param>
+            <param name="parserCollection">Parsers to use.</param>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.#ctor(System.String)">
+            <summary>
+            Initializes a parser only specifying the clientlog path, using default parser implementations
+            </summary>
+            <param name="clientLogPath">Path to the Client.txt of Path of Exile</param>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.#ctor(ClientLogParser.Parsers.ParserCollection)">
+            <summary>
+            This constructor does not initialize a filestream or timer so it can be used with testing by just calling the Parse function.
+            </summary>
+            <param name="parserCollection">Parsers to use.</param>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.OnWhisperPreParseEvent(ClientLogParser.Whisper)">
+            <summary>
+            Call on a new whisper, before parsing the trade.
+            </summary>
+            <param name="e">Parsed <see cref="T:ClientLogParser.Whisper"/></param>
+        </member>
+        <member name="E:ClientLogParser.ClientLogParser.WhisperPreParseEvent">
+            <summary>
+            Event is fired when a new <see cref="T:ClientLogParser.Whisper"/> is detected, before parsing the trade.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.OnTradeMessageEvent(ClientLogParser.Events.TradeMessageEventArgs)">
+            <summary>
+            Call on a new trade message, containing a <see cref="T:ClientLogParser.Whisper"/> and an <see cref="T:ClientLogParser.Item"/>
+            </summary>
+            <param name="e">Parsed <see cref="T:ClientLogParser.Events.TradeMessageEventArgs"/></param>
+        </member>
+        <member name="E:ClientLogParser.ClientLogParser.TradeMessageEvent">
+            <summary>
+            Event is fired when we receive a new whisper that contains a trade.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.OnWhisperPostParseEvent(ClientLogParser.Whisper)">
+            <summary>
+            Call after a failed trade message parse.
+            </summary>
+            <param name="e">Parsed <see cref="T:ClientLogParser.Whisper"/> without a trade message.</param>
+        </member>
+        <member name="E:ClientLogParser.ClientLogParser.WhisperPostParseEvent">
+            <summary>
+            Event is fired if there was a whisper but no trade message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.OnSystemMessage(ClientLogParser.SystemMessage)">
+            <summary>
+            Call on a new <see cref="T:ClientLogParser.SystemMessage"/>
+            </summary>
+            <param name="e">Parsed <see cref="T:ClientLogParser.SystemMessage"/></param>
+        </member>
+        <member name="E:ClientLogParser.ClientLogParser.SystemMessageEvent">
+            <summary>
+            Event is fired on a new system message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.ParseNewEntry(System.String)">
+            <summary>
+            Parses the entry and fires events accordingly.
+            </summary>
+            <param name="entry">Clientlog entry to parse</param>
+            <remarks>Use this method to test the parsers.</remarks>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.Dispose(System.Boolean)">
+            <summary>
+            Protected implementation of dispose.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:ClientLogParser.ClientLogParser.Dispose">
+            <summary>
+            Disposes objects used.
+            </summary>
+        </member>
+        <member name="T:ClientLogParser.Currency">
+            <summary>
+            Represents a Trade item as currency
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Currency.#ctor(System.String,System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new currency.
+            </summary>
+            <param name="name">Name of the item.</param>
+            <param name="amount">The amount of the currency.</param>
+            <param name="price">Offered price.</param>
+            <param name="league">League in which the item exists.</param>
+            <param name="stash">Name of the stash tab where the item is stored.</param>
+            <param name="pos">Position of the item inside the stash tab.</param>
+        </member>
+        <member name="F:ClientLogParser.Currency.Amount">
+            <summary>
+            The amount of the currency
+            </summary>
+        </member>
+        <member name="T:ClientLogParser.Events.TradeMessageEventArgs">
+            <summary>
+            Represents a trade message, consisting of a whisper and an item.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Events.TradeMessageEventArgs.#ctor(ClientLogParser.Whisper,ClientLogParser.Item,System.String)">
+            <summary>
+            Initializes a TradeMessage
+            </summary>
+            <param name="whisper">The whisper</param>
+            <param name="item">The item</param>
+            <param name="other">other messages</param>
+        </member>
+        <member name="P:ClientLogParser.Events.TradeMessageEventArgs.Whisper">
+            <summary>
+            The whisper of the trade
+            </summary>
+        </member>
+        <member name="P:ClientLogParser.Events.TradeMessageEventArgs.Item">
+            <summary>
+            The item of the trade
+            </summary>
+        </member>
+        <member name="P:ClientLogParser.Events.TradeMessageEventArgs.Other">
+            <summary>
+            Other messages
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Events.TradeMessageEventArgs.Equals(ClientLogParser.Events.TradeMessageEventArgs,ClientLogParser.Events.TradeMessageEventArgs)">
+            <summary>Determines whether the specified objects are equal.</summary>
+            <param name="x">The first object of type T to compare.</param>
+            <param name="y">The second object of type T to compare.</param>
+            <returns>true if the specified objects are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:ClientLogParser.Events.TradeMessageEventArgs.GetHashCode(ClientLogParser.Events.TradeMessageEventArgs)">
+            <summary>Returns a hash code for the specified object.</summary>
+            <param name="obj">The <see cref="T:System.Object"></see> for which a hash code is to be returned.</param>
+            <returns>A hash code for the specified object.</returns>
+            <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj">obj</paramref> is a reference type and <paramref name="obj">obj</paramref> is null.</exception>
+        </member>
+        <member name="M:ClientLogParser.Events.TradeMessageEventArgs.Equals(ClientLogParser.Events.TradeMessageEventArgs)">
+            <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the <paramref name="other">other</paramref> parameter; otherwise, false.</returns>
+        </member>
+        <member name="T:ClientLogParser.Gem">
+            <summary>
+            Represents a Trade item as a gem.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Gem.#ctor(System.String,System.String,System.Int32,System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new gem.
+            </summary>
+            <param name="name">Name of the gem.</param>
+            <param name="price">Offered price.</param>
+            <param name="league">League in which the gem exists.</param>
+            <param name="stash">Name of the stash tab where the gem is stored.</param>
+            <param name="pos">Position of the gem inside the stash tab.</param>
+            <param name="fullItemIdentifier">Optional full item name. If it differs from the regular name.</param>
+            <param name="level">Level of the gem.</param>
+            <param name="quality">Quality of the gem.</param>
+        </member>
+        <member name="F:ClientLogParser.Gem.Quality">
+            <summary>
+            Quality of the gem
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Gem.Level">
+            <summary>
+            Level of the gem
+            </summary>
+        </member>
+        <member name="T:ClientLogParser.Item">
+            <summary>
+            Represents a Trade item.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Item.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new item.
+            </summary>
+            <param name="name">Name of the item.</param>
+            <param name="price">Offered price.</param>
+            <param name="league">League in which the item exists.</param>
+            <param name="stash">Name of the stash tab where the item is stored.</param>
+            <param name="pos">Position of the item inside the stash tab.</param>
+            <param name="fullItemIdentifier">Optional full item name. If it differs from the regular name.</param>
+        </member>
+        <member name="F:ClientLogParser.Item.Name">
+            <summary>
+            Name of the item
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Item.Price">
+            <summary>
+            Price of the item
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Item.League">
+            <summary>
+            League in which the item exists 
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Item.Stash">
+            <summary>
+            Name of the stash tab where the item is stored
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Item.Pos">
+            <summary>
+            Position of the item inside the stash tab
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Item.FullItemIdentifier">
+            <summary>
+            Full name of the item
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Item.Equals(ClientLogParser.Item,ClientLogParser.Item)">
+            <summary>Determines whether the specified objects are equal.</summary>
+            <param name="x">The first object of type T to compare.</param>
+            <param name="y">The second object of type T to compare.</param>
+            <returns>true if the specified objects are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:ClientLogParser.Item.GetHashCode(ClientLogParser.Item)">
+            <summary>Returns a hash code for the specified object.</summary>
+            <param name="obj">The <see cref="T:System.Object"></see> for which a hash code is to be returned.</param>
+            <returns>A hash code for the specified object.</returns>
+            <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj">obj</paramref> is a reference type and <paramref name="obj">obj</paramref> is null.</exception>
+        </member>
+        <member name="M:ClientLogParser.Item.Equals(ClientLogParser.Item)">
+            <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the <paramref name="other">other</paramref> parameter; otherwise, false.</returns>
+        </member>
+        <member name="T:ClientLogParser.Map">
+            <summary>
+            Represents a Trade item as a map.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Map.#ctor(System.String,System.String,System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new map.
+            </summary>
+            <param name="name">Name of the map.</param>
+            <param name="price">Offered price.</param>
+            <param name="league">League in which the map exists.</param>
+            <param name="stash">Name of the stash tab where the map is stored.</param>
+            <param name="pos">Position of the map inside the stash tab.</param>
+            <param name="fullItemIdentifier">Optional full item name. If it differs from the regular name.</param>
+            <param name="tier">Tier of the map.</param>
+        </member>
+        <member name="F:ClientLogParser.Map.Tier">
+            <summary>
+            Tier of the map
+            </summary>
+        </member>
+        <member name="T:ClientLogParser.Parsers.IItemParser">
+            <summary>
+            Provides methods for parsing a <see cref="T:ClientLogParser.Whisper"/> message to an <see cref="T:ClientLogParser.Item"/>
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.IItemParser.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item"/>. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message"/> contained more than just a item, the remainder will be inside <paramref name="remainingMessage"/></param>
+            <returns>true if <paramref name="message"/> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.ISystemParser">
+            <summary>
+            Provides methods for parsing a Clientlog entry to a <see cref="T:ClientLogParser.SystemMessage"/>
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.ISystemParser.TryParse(System.String,ClientLogParser.SystemMessage@)">
+            <summary>
+            Converts the log entry string to a <see cref="T:ClientLogParser.SystemMessage"/>. The return value indicates success.
+            </summary>
+            <param name="entry">Clientlog entry to parse</param>
+            <param name="systemMessage">Contains the parsed <see cref="T:ClientLogParser.SystemMessage"/> if the method returned true, otherwise null.</param>
+            <returns>true if <paramref name="entry"/> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.IWhisperParser">
+            <summary>
+            Provides methods for parsing a Clientlog entry to a <see cref="T:ClientLogParser.Whisper"/>
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.IWhisperParser.TryParse(System.String,ClientLogParser.Whisper@)">
+            <summary>
+            Converts the log entry string to a <see cref="T:ClientLogParser.Whisper"/>. The return value indicates success.
+            </summary>
+            <param name="entry">Clientlog entry to parse</param>
+            <param name="whisper">Contains the parsed <see cref="T:ClientLogParser.Whisper"/> if the method returned true, otherwise null.</param>
+            <returns>true if <paramref name="entry"/> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.ParserCollection">
+            <summary>
+            Represents a collection of different parsers.
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Parsers.ParserCollection.Empty">
+            <summary>
+            An empty collection, containing no parsers.
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Parsers.ParserCollection.Default">
+            <summary>
+            Contains default parser implementations.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.ParserCollection.#ctor(System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.ISystemParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IWhisperParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IItemParser})">
+            <summary>
+            Initializes a new collection of parsers.
+            </summary>
+            <param name="systemParsers">The <see cref="T:ClientLogParser.Parsers.ISystemParser"/>s to use.</param>
+            <param name="whisperParsers">The <see cref="T:ClientLogParser.Parsers.IWhisperParser"/>s to use.</param>
+            <param name="itemParsers">The <see cref="T:ClientLogParser.Parsers.IItemParser"/>s to use.</param>
+        </member>
+        <member name="T:ClientLogParser.Parsers.ParserConstants">
+            <summary>
+            Contains constant values used when parsing.
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Parsers.ParserConstants.Self">
+            <summary>
+            String used when describing oneself
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Parsers.ParserConstants.Unpriced">
+            <summary>
+            String used for an unpriced item
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Parsers.ParserConstants.RelativePathToClient">
+            <summary>
+            Contains the relative path from the poe folder to the clientlog
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.ParserConstants.FormatPositionString(System.String,System.String)">
+            <summary>
+            Formats the stash left(x) and top(y) position to a uniform string.
+            </summary>
+            <param name="left">x position of item</param>
+            <param name="top">y position of item</param>
+            <returns>A uniform string representation of the position</returns>
+        </member>
+        <member name="M:ClientLogParser.Parsers.ParserConstants.FormatPositionString(System.Int32,System.Int32)">
+            <summary>
+            Formats the stash left(x) and top(y) position to a uniform string.
+            </summary>
+            <param name="left">x position of item</param>
+            <param name="top">y position of item</param>
+            <returns>A uniform string representation of the position</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.OfficialCurrencyParserRegex">
+            <summary>
+            Implementation of IItemParser for the official https://www.pathofexile.com/trade/ for a currency trade using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialCurrencyParserRegex.#ctor">
+            <summary>
+            Initializes a new regex parser for currency on the official site.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialCurrencyParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.OfficialItemParserRegex">
+            <summary>
+            Implementation of IItemParser for the official https://www.pathofexile.com/trade/ for a normal item trade with a set price using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialItemParserRegex.#ctor">
+            <summary>
+            Initializes a new regex parser for a regular item on the official site.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialItemParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.OfficialSiteParserRegex">
+            <summary>
+            Implementation of IItemParser for the official https://www.pathofexile.com/trade/ for all types of trades combining multiple parsers using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialSiteParserRegex.#ctor(ClientLogParser.Parsers.IItemParser,ClientLogParser.Parsers.IItemParser,ClientLogParser.Parsers.IItemParser)">
+            <summary>
+            Initializes a new parser for https://www.pathofexile.com/trade/ specifying the parsers.
+            </summary>
+            <param name="pricedItemParser">Parser to use for a regular priced item.</param>
+            <param name="unpricedItemParser">Parser to use for an unpriced item.</param>
+            <param name="currencyParser">Parser to use for currency.</param>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialSiteParserRegex.#ctor">
+            <summary>
+            Initializes a new parser for https://www.pathofexile.com/trade/ using the default parser implementations.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialSiteParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.OfficialUnpricedItemParserRegex">
+            <summary>
+            Implementation of IItemParser for the official https://www.pathofexile.com/trade/ for an unpriced item trade using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialUnpricedItemParserRegex.#ctor">
+            <summary>
+            Initializes a new regex parser for an unpriced item on the official site.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.OfficialUnpricedItemParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.PoeAppCurrencyParserRegex">
+            <summary>
+            Implementation of IItemParser for https://poeapp.com/ for a currency trade using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppCurrencyParserRegex.#ctor">
+            <summary>
+            Initializes a new regex parser for currency on poeapp
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppCurrencyParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.PoeAppItemParserRegex">
+            <summary>
+            Implementation of IItemParser for https://poeapp.com/ for a normal item trade using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppItemParserRegex.#ctor">
+            <summary>
+            Initializes a new regex parser for a regular item on poeapp
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppItemParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.PoeAppParserRegex">
+            <summary>
+            Implementation of IItemParser for https://poeapp.com/ for all types of trades combining multiple parsers using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppParserRegex.#ctor(ClientLogParser.Parsers.IItemParser,ClientLogParser.Parsers.IItemParser,ClientLogParser.Parsers.IItemParser)">
+            <summary>
+            Initializes a new parser for https://poeapp.com/ specifying the parsers.
+            </summary>
+            <param name="pricedItemParser">Parser to use for a regular priced item.</param>
+            <param name="unpricedItemParser">Parser to use for an unpriced item.</param>
+            <param name="currencyParser">Parser to use for currency.</param>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppParserRegex.#ctor">
+            <summary>
+            Initializes a new parser for https://poeapp.com/ using the default parser implementations.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.PoeAppUnpricedItemParserRegex">
+            <summary>
+            Implementation of IItemParser for https://poeapp.com/ for an unpriced item trade using Regex to parse the whisper message.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppUnpricedItemParserRegex.#ctor">
+            <summary>
+            Initializes a new regex parser for an unpriced item on poeapp
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.PoeAppUnpricedItemParserRegex.TryParse(System.String,ClientLogParser.Item@,System.String@)">
+            <summary>
+            Converts the whisper string to an <see cref="T:ClientLogParser.Item" />. The return value indicates success.
+            </summary>
+            <param name="message">Message to parse</param>
+            <param name="item">Contains the parsed item if the method returned true, otherwise null.</param>
+            <param name="remainingMessage">If the <paramref name="message" /> contained more than just a item, the remainder will be inside <paramref name="remainingMessage" /></param>
+            <returns>true if <paramref name="message" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.SystemParserRegex">
+            <summary>
+            Implementation of <see cref="T:ClientLogParser.Parsers.ISystemParser"/> using Regex to parse the entry.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.SystemParserRegex.#ctor">
+            <summary>
+            Initializes a new regex system parser.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.SystemParserRegex.TryParse(System.String,ClientLogParser.SystemMessage@)">
+            <summary>
+            Converts the log entry string to a <see cref="T:ClientLogParser.SystemMessage" />. The return value indicates success.
+            </summary>
+            <param name="entry">Clientlog entry to parse</param>
+            <param name="systemMessage">Contains the parsed <see cref="T:ClientLogParser.SystemMessage" /> if the method returned true, otherwise null.</param>
+            <returns>true if <paramref name="entry" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.WhisperParserRegex">
+            <summary>
+            Implementation of IWhisperParser using Regex to parse the entry.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.WhisperParserRegex.#ctor">
+            <summary>
+            Initializes a new regex whisper parser.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.WhisperParserRegex.TryParse(System.String,ClientLogParser.Whisper@)">
+            <summary>
+            Converts the log entry string to a <see cref="T:ClientLogParser.Whisper" />. The return value indicates success.
+            </summary>
+            <param name="entry">Clientlog entry to parse</param>
+            <param name="whisper">Contains the parsed <see cref="T:ClientLogParser.Whisper" /> if the method returned true, otherwise null.</param>
+            <returns>true if <paramref name="entry" /> was converted successfully; false otherwise.</returns>
+        </member>
+        <member name="T:ClientLogParser.SystemMessage">
+            <summary>
+            Represents an ingame whisper, with a sender, recipient, the message and time of receivement
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.SystemMessage.#ctor(ClientLogParser.SystemMessageType,System.DateTime)">
+            <summary>
+            Initializes a new whisper
+            </summary>
+            <param name="type">Type of SystemMessage</param>
+            <param name="timeOfMessage">The time the SystemMessage was received</param>
+        </member>
+        <member name="F:ClientLogParser.SystemMessage.Type">
+            <summary>
+            The type of the System Message
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.SystemMessage.TimeOfMessage">
+            <summary>
+            The time the whisper was received
+            </summary>
+        </member>
+        <member name="T:ClientLogParser.SystemMessageType">
+            <summary>
+            The type of the System Message
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.SystemMessageType.MaintenanceDisconnect">
+            <summary>
+            Server is down for maintenance.
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.SystemMessageType.NewPatchDisconnect">
+            <summary>
+            There is a new patch we need to download.
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.SystemMessageType.ReenterPassword">
+            <summary>
+            User needs to reenter his password.
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.SystemMessageType.ServerDown">
+            <summary>
+            Server is down.
+            </summary>
+        </member>
+        <member name="T:ClientLogParser.Whisper">
+            <summary>
+            Represents an ingame whisper, with a sender, recipient, the message and time of receivement
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Whisper.#ctor(System.String,System.String,System.String,System.DateTime)">
+            <summary>
+            Initializes a new whisper
+            </summary>
+            <param name="sender">The sender of the whisper</param>
+            <param name="recipient">The recipient of the whisper</param>
+            <param name="message">The actual whisper message</param>
+            <param name="timeOfMessage">The time the whisper was received</param>
+        </member>
+        <member name="F:ClientLogParser.Whisper.Sender">
+            <summary>
+            The sender of the whisper
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Whisper.Recipient">
+            <summary>
+            The recipient of the whisper
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Whisper.Message">
+            <summary>
+            The actual whisper message
+            </summary>
+        </member>
+        <member name="F:ClientLogParser.Whisper.TimeOfMessage">
+            <summary>
+            The time the whisper was received
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Whisper.Equals(ClientLogParser.Whisper,ClientLogParser.Whisper)">
+            <summary>Determines whether the specified objects are equal.</summary>
+            <param name="x">The first object of type T to compare.</param>
+            <param name="y">The second object of type T to compare.</param>
+            <returns>true if the specified objects are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:ClientLogParser.Whisper.GetHashCode(ClientLogParser.Whisper)">
+            <summary>Returns a hash code for the specified object.</summary>
+            <param name="obj">The <see cref="T:System.Object"></see> for which a hash code is to be returned.</param>
+            <returns>A hash code for the specified object.</returns>
+            <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj">obj</paramref> is a reference type and <paramref name="obj">obj</paramref> is null.</exception>
+        </member>
+        <member name="M:ClientLogParser.Whisper.Equals(ClientLogParser.Whisper)">
+            <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the <paramref name="other">other</paramref> parameter; otherwise, false.</returns>
+        </member>
+    </members>
+</doc>
