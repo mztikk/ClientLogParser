@@ -4,10 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Platforms>AnyCPU;x64</Platforms>
+    <Authors>mztikk</Authors>
+    <Company>mztikk</Company>
+    <Description>Library that parses Path of Exile Clientlog and fires events accordingly.</Description>
+    <PackageProjectUrl>https://github.com/mztikk/ClientLogParser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mztikk/ClientLogParser</RepositoryUrl>
+    <PackageTags>path of exile client log parser mztikk</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Users\ridiculous\source\repos\ClientLogParser\ClientLogParser\ClientLogParser.xml</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -17,6 +24,10 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
 
 </Project>
