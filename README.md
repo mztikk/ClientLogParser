@@ -1,6 +1,6 @@
 ### ClientLogParser ###
 
-Looks for new entries in the Client.txt of Path of Exile to try parse them to system messages, whispers and trade messages etc.  
+ClientLogParser is a library that parses Path of Exile Clientlog and fires events for system messages, whispers and trade messages etc.
 
 It currently has default parser implementations for:
  - https://www.pathofexile.com/trade/
