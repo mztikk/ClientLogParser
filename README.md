@@ -2,6 +2,8 @@
 
 ClientLogParser is a library that parses Path of Exile Clientlog and fires events for system messages, whispers and trade messages etc.
 
+Available on [nuget](https://www.nuget.org/packages/ClientLogParser/).
+
 It currently has default parser implementations for:
  - https://www.pathofexile.com/trade/
  - http://poe.trade (only because they use the same structure as the official site above)
