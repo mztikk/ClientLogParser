@@ -10,7 +10,7 @@ namespace ClientLogParser
     /// <summary>
     /// Provides methods and events for parsing/handling new clientlog entries.
     /// </summary>
-    public class ClientLogParser : IDisposable
+    public class Overseer : IDisposable
     {
         private readonly string _clientLogPath;
 
@@ -35,7 +35,7 @@ namespace ClientLogParser
         /// </summary>
         /// <param name="clientLogPath">Path to the Client.txt of Path of Exile</param>
         /// <param name="parserCollection">Parsers to use.</param>
-        public ClientLogParser(string clientLogPath, ParserCollection parserCollection)
+        public Overseer(string clientLogPath, ParserCollection parserCollection)
         {
             _clientLogPath = clientLogPath;
             _parserCollection = parserCollection;
@@ -56,14 +56,14 @@ namespace ClientLogParser
         /// Initializes a parser only specifying the clientlog path, using default parser implementations
         /// </summary>
         /// <param name="clientLogPath">Path to the Client.txt of Path of Exile</param>
-        public ClientLogParser(string clientLogPath) : this(clientLogPath, ParserCollection.Default)
+        public Overseer(string clientLogPath) : this(clientLogPath, ParserCollection.Default)
         { }
 
         /// <summary>
         /// This constructor does not initialize a filestream or timer so it can be used with testing by just calling the Parse function.
         /// </summary>
         /// <param name="parserCollection">Parsers to use.</param>
-        public ClientLogParser(ParserCollection parserCollection)
+        public Overseer(ParserCollection parserCollection)
         {
             _parserCollection = parserCollection;
 

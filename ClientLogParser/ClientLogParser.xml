@@ -183,93 +183,93 @@
             Tier of the map
             </summary>
         </member>
-        <member name="T:ClientLogParser.ClientLogParser">
+        <member name="T:ClientLogParser.Overseer">
             <summary>
             Provides methods and events for parsing/handling new clientlog entries.
             </summary>
         </member>
-        <member name="P:ClientLogParser.ClientLogParser.Interval">
+        <member name="P:ClientLogParser.Overseer.Interval">
             <summary>
             Time in milliseconds after which to check for new entries in the clientlog. (Default: 1500)
             </summary>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.#ctor(System.String,ClientLogParser.Parsers.ParserCollection)">
+        <member name="M:ClientLogParser.Overseer.#ctor(System.String,ClientLogParser.Parsers.ParserCollection)">
             <summary>
             Initializes a parser.
             </summary>
             <param name="clientLogPath">Path to the Client.txt of Path of Exile</param>
             <param name="parserCollection">Parsers to use.</param>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.#ctor(System.String)">
+        <member name="M:ClientLogParser.Overseer.#ctor(System.String)">
             <summary>
             Initializes a parser only specifying the clientlog path, using default parser implementations
             </summary>
             <param name="clientLogPath">Path to the Client.txt of Path of Exile</param>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.#ctor(ClientLogParser.Parsers.ParserCollection)">
+        <member name="M:ClientLogParser.Overseer.#ctor(ClientLogParser.Parsers.ParserCollection)">
             <summary>
             This constructor does not initialize a filestream or timer so it can be used with testing by just calling the Parse function.
             </summary>
             <param name="parserCollection">Parsers to use.</param>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.OnWhisperPreParseEvent(ClientLogParser.Whisper)">
+        <member name="M:ClientLogParser.Overseer.OnWhisperPreParseEvent(ClientLogParser.Whisper)">
             <summary>
             Call on a new whisper, before parsing the trade.
             </summary>
             <param name="e">Parsed <see cref="T:ClientLogParser.Whisper"/></param>
         </member>
-        <member name="E:ClientLogParser.ClientLogParser.WhisperPreParseEvent">
+        <member name="E:ClientLogParser.Overseer.WhisperPreParseEvent">
             <summary>
             Event is fired when a new <see cref="T:ClientLogParser.Whisper"/> is detected, before parsing the trade.
             </summary>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.OnTradeMessageEvent(ClientLogParser.Events.TradeMessageEventArgs)">
+        <member name="M:ClientLogParser.Overseer.OnTradeMessageEvent(ClientLogParser.Events.TradeMessageEventArgs)">
             <summary>
             Call on a new trade message, containing a <see cref="T:ClientLogParser.Whisper"/> and an <see cref="T:ClientLogParser.Item"/>
             </summary>
             <param name="e">Parsed <see cref="T:ClientLogParser.Events.TradeMessageEventArgs"/></param>
         </member>
-        <member name="E:ClientLogParser.ClientLogParser.TradeMessageEvent">
+        <member name="E:ClientLogParser.Overseer.TradeMessageEvent">
             <summary>
             Event is fired when we receive a new whisper that contains a trade.
             </summary>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.OnWhisperPostParseEvent(ClientLogParser.Whisper)">
+        <member name="M:ClientLogParser.Overseer.OnWhisperPostParseEvent(ClientLogParser.Whisper)">
             <summary>
             Call after a failed trade message parse.
             </summary>
             <param name="e">Parsed <see cref="T:ClientLogParser.Whisper"/> without a trade message.</param>
         </member>
-        <member name="E:ClientLogParser.ClientLogParser.WhisperPostParseEvent">
+        <member name="E:ClientLogParser.Overseer.WhisperPostParseEvent">
             <summary>
             Event is fired if there was a whisper but no trade message.
             </summary>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.OnSystemMessage(ClientLogParser.SystemMessage)">
+        <member name="M:ClientLogParser.Overseer.OnSystemMessage(ClientLogParser.SystemMessage)">
             <summary>
             Call on a new <see cref="T:ClientLogParser.SystemMessage"/>
             </summary>
             <param name="e">Parsed <see cref="T:ClientLogParser.SystemMessage"/></param>
         </member>
-        <member name="E:ClientLogParser.ClientLogParser.SystemMessageEvent">
+        <member name="E:ClientLogParser.Overseer.SystemMessageEvent">
             <summary>
             Event is fired on a new system message.
             </summary>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.ParseNewEntry(System.String)">
+        <member name="M:ClientLogParser.Overseer.ParseNewEntry(System.String)">
             <summary>
             Parses the entry and fires events accordingly.
             </summary>
             <param name="entry">Clientlog entry to parse</param>
             <remarks>Use this method to test the parsers.</remarks>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.Dispose(System.Boolean)">
+        <member name="M:ClientLogParser.Overseer.Dispose(System.Boolean)">
             <summary>
             Protected implementation of dispose.
             </summary>
             <param name="disposing"></param>
         </member>
-        <member name="M:ClientLogParser.ClientLogParser.Dispose">
+        <member name="M:ClientLogParser.Overseer.Dispose">
             <summary>
             Disposes objects used.
             </summary>
