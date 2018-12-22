@@ -11,6 +11,7 @@
     <RepositoryUrl>https://github.com/mztikk/ClientLogParser</RepositoryUrl>
     <PackageTags>pathofexile path of exile client log parser mztikk</PackageTags>
     <Version>1.0.1</Version>
+    <PackageLicenseUrl>github.com/mztikk/ClientLogParser/blob/master/LICENSE.md</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

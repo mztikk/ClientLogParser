@@ -20,3 +20,8 @@ var parser = new Overseer(@"E:\Games\PathOfExile\logs\Client.txt");
 // Subscribe to trade message event and display the name of the item and the price he wants to buy for
 parser.TradeMessageEvent += (object sender, TradeMessageEventArgs tradeMessage) => Console.WriteLine(tradeMessage.Item.Name + ": " + tradeMessage.Item.Price);
 ```
+
+## ##
+## License ##
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (GNU GPLv3).
