@@ -1,4 +1,6 @@
-﻿namespace ClientLogParser.Parsers.RegexImplementations
+﻿using ClientLogParser.Items;
+
+namespace ClientLogParser.Parsers.RegexImplementations
 {
     /// <summary>
     /// Implementation of IItemParser for https://poeapp.com/ for all types of trades combining multiple parsers using Regex to parse the whisper message.

@@ -1,4 +1,6 @@
-﻿namespace ClientLogParser.Parsers.RegexImplementations
+﻿using ClientLogParser.Items;
+
+namespace ClientLogParser.Parsers.RegexImplementations
 {
     /// <summary>
     /// Implementation of IItemParser for the official https://www.pathofexile.com/trade/ for all types of trades combining multiple parsers using Regex to parse the whisper message.

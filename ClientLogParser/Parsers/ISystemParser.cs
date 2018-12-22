@@ -1,4 +1,6 @@
-﻿namespace ClientLogParser.Parsers
+﻿using ClientLogParser.Messages;
+
+namespace ClientLogParser.Parsers
 {
     /// <summary>
     /// Provides methods for parsing a Clientlog entry to a <see cref="SystemMessage"/>

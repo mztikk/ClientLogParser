@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClientLogParser
+namespace ClientLogParser.Items
 {
     /// <summary>
     /// Represents a Trade item.

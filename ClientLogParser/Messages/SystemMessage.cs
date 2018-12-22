@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClientLogParser
+namespace ClientLogParser.Messages
 {
     /// <summary>
     /// Represents an ingame whisper, with a sender, recipient, the message and time of receivement

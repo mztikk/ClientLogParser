@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using ClientLogParser.Items;
 
 namespace ClientLogParser.Parsers.RegexImplementations
 {

@@ -3,6 +3,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Timers;
 using ClientLogParser.Events;
+using ClientLogParser.Items;
+using ClientLogParser.Messages;
 using ClientLogParser.Parsers;
 
 namespace ClientLogParser

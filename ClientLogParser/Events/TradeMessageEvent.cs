@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClientLogParser.Items;
+using ClientLogParser.Messages;
 
 namespace ClientLogParser.Events
 {

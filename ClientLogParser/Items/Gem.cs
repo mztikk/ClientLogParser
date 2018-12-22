@@ -1,4 +1,4 @@
-﻿namespace ClientLogParser
+﻿namespace ClientLogParser.Items
 {
     /// <summary>
     /// Represents a Trade item as a gem.
