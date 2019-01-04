@@ -190,6 +190,17 @@ namespace ClientLogParser
         public event EventHandler<SystemMessage> SystemMessageEvent;
 
         /// <summary>
+        /// Call on a new <see cref="ChangeAreaEvent"/>
+        /// </summary>
+        /// <param name="e">Parsed <see cref="ChangeAreaEvent"/></param>
+        protected virtual void OnAreaChange(ChangeAreaEvent e) => ChangeAreaEvent?.Invoke(this, e);
+
+        /// <summary>
+        /// Event is fired when the localplayer enters a new area.
+        /// </summary>
+        public event EventHandler<ChangeAreaEvent> ChangeAreaEvent;
+
+        /// <summary>
         /// Parses the entry and fires events accordingly.
         /// </summary>
         /// <param name="entry">Clientlog entry to parse</param>
@@ -203,6 +214,15 @@ namespace ClientLogParser
                     //var whisperEvent = new WhisperEventArgs(whisper.Sender, whisper.Recipient, whisper.Message, whisper.TimeOfMessage);
                     OnWhisperPreParseEvent(whisper);
                     // we found a match so skip everything else
+                    return;
+                }
+            }
+
+            foreach (IAreaChangeParser parser in _parserCollection._areaChangeParsers)
+            {
+                if (parser.TryParse(entry, out DateTime time, out string newArea))
+                {
+                    OnAreaChange(new ChangeAreaEvent(time, newArea));
                     return;
                 }
             }

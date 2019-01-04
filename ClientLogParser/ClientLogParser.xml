@@ -393,6 +393,17 @@
             Event is fired on a new system message.
             </summary>
         </member>
+        <member name="M:ClientLogParser.Overseer.OnAreaChange(ClientLogParser.Events.ChangeAreaEvent)">
+            <summary>
+            Call on a new <see cref="E:ClientLogParser.Overseer.ChangeAreaEvent"/>
+            </summary>
+            <param name="e">Parsed <see cref="E:ClientLogParser.Overseer.ChangeAreaEvent"/></param>
+        </member>
+        <member name="E:ClientLogParser.Overseer.ChangeAreaEvent">
+            <summary>
+            Event is fired when the localplayer enters a new area.
+            </summary>
+        </member>
         <member name="M:ClientLogParser.Overseer.ParseNewEntry(System.String)">
             <summary>
             Parses the entry and fires events accordingly.
