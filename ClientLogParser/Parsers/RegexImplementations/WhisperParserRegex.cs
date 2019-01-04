@@ -5,7 +5,7 @@ using ClientLogParser.Messages;
 namespace ClientLogParser.Parsers.RegexImplementations
 {
     /// <summary>
-    /// Implementation of IWhisperParser using Regex to parse the entry.
+    /// Implementation of <see cref="IWhisperParser"/> using Regex to parse the entry.
     /// </summary>
     public class WhisperParserRegex : IWhisperParser
     {
