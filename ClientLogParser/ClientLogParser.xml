@@ -480,13 +480,14 @@
             Contains default parser implementations.
             </summary>
         </member>
-        <member name="M:ClientLogParser.Parsers.ParserCollection.#ctor(System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.ISystemParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IWhisperParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IItemParser})">
+        <member name="M:ClientLogParser.Parsers.ParserCollection.#ctor(System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.ISystemParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IWhisperParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IItemParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IAreaChangeParser})">
             <summary>
             Initializes a new collection of parsers.
             </summary>
             <param name="systemParsers">The <see cref="T:ClientLogParser.Parsers.ISystemParser"/>s to use.</param>
             <param name="whisperParsers">The <see cref="T:ClientLogParser.Parsers.IWhisperParser"/>s to use.</param>
             <param name="itemParsers">The <see cref="T:ClientLogParser.Parsers.IItemParser"/>s to use.</param>
+            <param name="areaChangeParsers">The <see cref="T:ClientLogParser.Parsers.IAreaChangeParser"/>s to use.</param>
         </member>
         <member name="T:ClientLogParser.Parsers.ParserConstants">
             <summary>
@@ -523,6 +524,25 @@
             <param name="left">x position of item</param>
             <param name="top">y position of item</param>
             <returns>A uniform string representation of the position</returns>
+        </member>
+        <member name="T:ClientLogParser.Parsers.RegexImplementations.AreaChangeParserRegex">
+            <summary>
+            Implementation of <see cref="T:ClientLogParser.Parsers.IAreaChangeParser"/> using Regex to parse the entry.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.AreaChangeParserRegex.#ctor">
+            <summary>
+            Initializes a new regex areachange parser.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Parsers.RegexImplementations.AreaChangeParserRegex.TryParse(System.String,System.DateTime@,System.String@)">
+            <summary>
+            Parses the log entry string. The return value indicates success.
+            </summary>
+            <param name="entry">Clientlog entry to parse</param>
+            <param name="time">Contains the parsed <see cref="T:System.DateTime" /> if the method returned <see langword="true" />, otherwise null.</param>
+            <param name="newArea">Contains the parsed new area the played entered if the method returned <see langword="true" />, otherwise null.</param>
+            <returns>true if <paramref name="entry" /> was converted successfully; false otherwise.</returns>
         </member>
         <member name="T:ClientLogParser.Parsers.RegexImplementations.OfficialCurrencyParserRegex">
             <summary>
@@ -712,7 +732,7 @@
         </member>
         <member name="T:ClientLogParser.Parsers.RegexImplementations.WhisperParserRegex">
             <summary>
-            Implementation of IWhisperParser using Regex to parse the entry.
+            Implementation of <see cref="T:ClientLogParser.Parsers.IWhisperParser"/> using Regex to parse the entry.
             </summary>
         </member>
         <member name="M:ClientLogParser.Parsers.RegexImplementations.WhisperParserRegex.#ctor">
