@@ -4,6 +4,45 @@
         <name>ClientLogParser</name>
     </assembly>
     <members>
+        <member name="T:ClientLogParser.Events.ChangeAreaEvent">
+            <summary>
+            Represents an area change event, to trigger whenever the localplayer enters a new area.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Events.ChangeAreaEvent.#ctor(System.DateTime,System.String)">
+            <summary>
+            Initializes a new <see cref="T:ClientLogParser.Events.ChangeAreaEvent"/>.
+            </summary>
+            <param name="time">Time when the player entered the area</param>
+            <param name="area">Name of the new area the player entered</param>
+        </member>
+        <member name="P:ClientLogParser.Events.ChangeAreaEvent.Time">
+            <summary>
+            Time when the player entered the area.
+            </summary>
+        </member>
+        <member name="P:ClientLogParser.Events.ChangeAreaEvent.Area">
+            <summary>
+            Name of the new area the player entered.
+            </summary>
+        </member>
+        <member name="M:ClientLogParser.Events.ChangeAreaEvent.Equals(ClientLogParser.Events.ChangeAreaEvent)">
+            <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the <paramref name="other">other</paramref> parameter; otherwise, false.</returns>
+        </member>
+        <member name="M:ClientLogParser.Events.ChangeAreaEvent.Equals(ClientLogParser.Events.ChangeAreaEvent,ClientLogParser.Events.ChangeAreaEvent)">
+            <summary>Determines whether the specified objects are equal.</summary>
+            <param name="x">The first object of type T to compare.</param>
+            <param name="y">The second object of type T to compare.</param>
+            <returns>true if the specified objects are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:ClientLogParser.Events.ChangeAreaEvent.GetHashCode(ClientLogParser.Events.ChangeAreaEvent)">
+            <summary>Returns a hash code for the specified object.</summary>
+            <param name="obj">The <see cref="T:System.Object"></see> for which a hash code is to be returned.</param>
+            <returns>A hash code for the specified object.</returns>
+            <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj">obj</paramref> is a reference type and <paramref name="obj">obj</paramref> is null.</exception>
+        </member>
         <member name="T:ClientLogParser.Events.TradeMessageEventArgs">
             <summary>
             Represents a trade message, consisting of a whisper and an item.
