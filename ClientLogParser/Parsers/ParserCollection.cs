@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ClientLogParser.Parsers.RegexImplementations;
 
 namespace ClientLogParser.Parsers
@@ -11,31 +12,18 @@ namespace ClientLogParser.Parsers
         /// <summary>
         /// An empty collection, containing no parsers.
         /// </summary>
-        public static readonly ParserCollection Empty = new ParserCollection(
-            new List<ISystemParser>(),
-            new List<IWhisperParser>(),
-            new List<IItemParser>(),
-            new List<IAreaChangeParser>());
+        public static readonly ParserCollection Empty = new ParserCollection(new List<IParser>());
 
         /// <summary>
         /// Contains default parser implementations.
         /// </summary>
         public static readonly ParserCollection Default = new ParserCollection(
-            new List<ISystemParser>
+            new List<IParser>()
             {
-                new SystemParserRegex()
-            },
-            new List<IWhisperParser>
-            {
-                new WhisperParserRegex()
-            },
-            new List<IItemParser>
-            {
+                new SystemParserRegex(),
+                new WhisperParserRegex(),
                 new OfficialSiteParserRegex(),
-                new PoeAppParserRegex()
-            },
-            new List<IAreaChangeParser>()
-            {
+                new PoeAppParserRegex(),
                 new AreaChangeParserRegex()
             });
 
@@ -47,19 +35,24 @@ namespace ClientLogParser.Parsers
 
         internal IEnumerable<IAreaChangeParser> _areaChangeParsers { get; }
 
+        internal IEnumerable<IParser> _parsers { get; }
+
         /// <summary>
         /// Initializes a new collection of parsers.
         /// </summary>
-        /// <param name="systemParsers">The <see cref="ISystemParser"/>s to use.</param>
-        /// <param name="whisperParsers">The <see cref="IWhisperParser"/>s to use.</param>
-        /// <param name="itemParsers">The <see cref="IItemParser"/>s to use.</param>
-        /// <param name="areaChangeParsers">The <see cref="IAreaChangeParser"/>s to use.</param>
-        public ParserCollection(IEnumerable<ISystemParser> systemParsers, IEnumerable<IWhisperParser> whisperParsers, IEnumerable<IItemParser> itemParsers, IEnumerable<IAreaChangeParser> areaChangeParsers)
+        /// <param name="parsers">The <see cref="IParser"/>s to use.</param>
+        public ParserCollection(IEnumerable<IParser> parsers)
         {
-            _systemParsers = systemParsers;
-            _whisperParsers = whisperParsers;
-            _itemParsers = itemParsers;
-            _areaChangeParsers = areaChangeParsers;
+            _parsers = parsers;
+            _systemParsers = parsers.OfType<ISystemParser>();
+            _whisperParsers = parsers.OfType<IWhisperParser>();
+            _itemParsers = parsers.OfType<IItemParser>();
+            _areaChangeParsers = parsers.OfType<IAreaChangeParser>();
+
+            //_systemParsers = systemParsers;
+            //_whisperParsers = whisperParsers;
+            //_itemParsers = itemParsers;
+            //_areaChangeParsers = areaChangeParsers;
         }
     }
 }
