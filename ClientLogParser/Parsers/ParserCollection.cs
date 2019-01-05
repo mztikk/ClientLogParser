@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ClientLogParser.Parsers.RegexImplementations;
 
@@ -27,12 +28,16 @@ namespace ClientLogParser.Parsers
                 new AreaChangeParserRegex()
             });
 
+        [Obsolete("Use the general _parsers instead")]
         internal IEnumerable<IWhisperParser> _whisperParsers { get; }
 
+        [Obsolete("Use the general _parsers instead")]
         internal IEnumerable<IItemParser> _itemParsers { get; }
 
+        [Obsolete("Use the general _parsers instead")]
         internal IEnumerable<ISystemParser> _systemParsers { get; }
 
+        [Obsolete("Use the general _parsers instead")]
         internal IEnumerable<IAreaChangeParser> _areaChangeParsers { get; }
 
         internal IEnumerable<IParser> _parsers { get; }
