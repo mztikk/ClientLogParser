@@ -450,6 +450,11 @@
             <param name="remainingMessage">If the <paramref name="message"/> contained more than just a item, the remainder will be inside <paramref name="remainingMessage"/></param>
             <returns>true if <paramref name="message"/> was converted successfully; false otherwise.</returns>
         </member>
+        <member name="T:ClientLogParser.Parsers.IParser">
+            <summary>
+            Base Parser interface
+            </summary>
+        </member>
         <member name="T:ClientLogParser.Parsers.ISystemParser">
             <summary>
             Provides methods for parsing a Clientlog entry to a <see cref="T:ClientLogParser.Messages.SystemMessage"/>
@@ -491,14 +496,11 @@
             Contains default parser implementations.
             </summary>
         </member>
-        <member name="M:ClientLogParser.Parsers.ParserCollection.#ctor(System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.ISystemParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IWhisperParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IItemParser},System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IAreaChangeParser})">
+        <member name="M:ClientLogParser.Parsers.ParserCollection.#ctor(System.Collections.Generic.IEnumerable{ClientLogParser.Parsers.IParser})">
             <summary>
             Initializes a new collection of parsers.
             </summary>
-            <param name="systemParsers">The <see cref="T:ClientLogParser.Parsers.ISystemParser"/>s to use.</param>
-            <param name="whisperParsers">The <see cref="T:ClientLogParser.Parsers.IWhisperParser"/>s to use.</param>
-            <param name="itemParsers">The <see cref="T:ClientLogParser.Parsers.IItemParser"/>s to use.</param>
-            <param name="areaChangeParsers">The <see cref="T:ClientLogParser.Parsers.IAreaChangeParser"/>s to use.</param>
+            <param name="parsers">The <see cref="T:ClientLogParser.Parsers.IParser"/>s to use.</param>
         </member>
         <member name="T:ClientLogParser.Parsers.ParserConstants">
             <summary>

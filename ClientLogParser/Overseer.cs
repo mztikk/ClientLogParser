@@ -207,33 +207,31 @@ namespace ClientLogParser
         /// <remarks>Use this method to test the parsers.</remarks>
         public void ParseNewEntry(string entry)
         {
-            foreach (IWhisperParser whisperParser in _parserCollection._whisperParsers)
+            foreach (IParser parser in _parserCollection._parsers)
             {
-                if (whisperParser.TryParse(entry, out Whisper whisper))
+                switch (parser)
                 {
-                    //var whisperEvent = new WhisperEventArgs(whisper.Sender, whisper.Recipient, whisper.Message, whisper.TimeOfMessage);
-                    OnWhisperPreParseEvent(whisper);
-                    // we found a match so skip everything else
-                    return;
-                }
-            }
-
-            foreach (IAreaChangeParser parser in _parserCollection._areaChangeParsers)
-            {
-                if (parser.TryParse(entry, out DateTime time, out string newArea))
-                {
-                    OnAreaChange(new ChangeAreaEvent(time, newArea));
-                    return;
-                }
-            }
-
-            foreach (ISystemParser parser in _parserCollection._systemParsers)
-            {
-                if (parser.TryParse(entry, out SystemMessage msg))
-                {
-                    //var systemEvent = new SystemMessageEvent(msg);
-                    OnSystemMessage(msg);
-                    return;
+                    case IWhisperParser w:
+                        if (w.TryParse(entry, out Whisper whisper))
+                        {
+                            OnWhisperPreParseEvent(whisper);
+                            return;
+                        }
+                        continue;
+                    case IAreaChangeParser a:
+                        if (a.TryParse(entry, out DateTime time, out string newArea))
+                        {
+                            OnAreaChange(new ChangeAreaEvent(time, newArea));
+                            return;
+                        }
+                        continue;
+                    case ISystemParser s:
+                        if (s.TryParse(entry, out SystemMessage msg))
+                        {
+                            OnSystemMessage(msg);
+                            return;
+                        }
+                        continue;
                 }
             }
         }
@@ -245,14 +243,19 @@ namespace ClientLogParser
                 return;
             }
 
-            foreach (IItemParser itemParser in _parserCollection._itemParsers)
+            foreach (IParser parser in _parserCollection._parsers)
             {
-                if (itemParser.TryParse(e.Message, out Item item, out var other))
+                switch (parser)
                 {
-                    var tradeEvent = new TradeMessageEventArgs(e, item, other);
-                    OnTradeMessageEvent(tradeEvent);
-                    // we found a match so lets return early so we can trigger a postparse event if we didn't find anything
-                    return;
+                    case IItemParser i:
+                        if (i.TryParse(e.Message, out Item item, out var other))
+                        {
+                            var tradeEvent = new TradeMessageEventArgs(e, item, other);
+                            OnTradeMessageEvent(tradeEvent);
+                            // we found a match so lets return early so we can trigger a postparse event if we didn't find anything
+                            return;
+                        }
+                        continue;
                 }
             }
 
