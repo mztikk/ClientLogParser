@@ -5,7 +5,7 @@ namespace ClientLogParser.Parsers
     /// <summary>
     /// Provides methods for parsing a Clientlog entry to a <see cref="Whisper"/>
     /// </summary>
-    public interface IWhisperParser
+    public interface IWhisperParser : IParser
     {
         /// <summary>
         /// Converts the log entry string to a <see cref="Whisper"/>. The return value indicates success.

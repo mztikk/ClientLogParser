@@ -5,7 +5,7 @@ namespace ClientLogParser.Parsers
     /// <summary>
     /// Provides methods for parsing an Area Change Clientlog entry.
     /// </summary>
-    public interface IAreaChangeParser
+    public interface IAreaChangeParser : IParser
     {
         /// <summary>
         /// Parses the log entry string. The return value indicates success.

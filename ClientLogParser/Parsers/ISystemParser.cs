@@ -5,7 +5,7 @@ namespace ClientLogParser.Parsers
     /// <summary>
     /// Provides methods for parsing a Clientlog entry to a <see cref="SystemMessage"/>
     /// </summary>
-    public interface ISystemParser
+    public interface ISystemParser : IParser
     {
         /// <summary>
         /// Converts the log entry string to a <see cref="SystemMessage"/>. The return value indicates success.

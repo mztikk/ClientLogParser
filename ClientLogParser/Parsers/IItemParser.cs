@@ -6,7 +6,7 @@ namespace ClientLogParser.Parsers
     /// <summary>
     /// Provides methods for parsing a <see cref="Whisper"/> message to an <see cref="Item"/>
     /// </summary>
-    public interface IItemParser
+    public interface IItemParser : IParser
     {
         /// <summary>
         /// Converts the whisper string to an <see cref="Item"/>. The return value indicates success.
