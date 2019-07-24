@@ -8,6 +8,7 @@ It currently has default parser implementations for:
  - https://www.pathofexile.com/trade/
  - http://poe.trade (only because they use the same structure as the official site above)
  - https://poeapp.com
+ - https://poemap.live/
 
 ## Examples ##
 
