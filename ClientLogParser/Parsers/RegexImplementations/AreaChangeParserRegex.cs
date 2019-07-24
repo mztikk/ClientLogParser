@@ -13,7 +13,7 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public AreaChangeParserRegex()
         {
-            _areaChange = new Regex($"{RegexConstants._LogEntryRegex} : You have entered {RegexConstants._AreaRegex}\\.");
+            _areaChange = new Regex($"{RegexConstants.LogEntryRegex} : You have entered {RegexConstants.AreaRegex}\\.");
         }
 
         private readonly Regex _areaChange;

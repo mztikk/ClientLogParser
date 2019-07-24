@@ -14,8 +14,8 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public WhisperParserRegex()
         {
-            _fromWhisper = new Regex(RegexConstants._LogEntryRegex + " @From (.*?): (.*)", RegexOptions.Compiled);
-            _toWhisper = new Regex(RegexConstants._LogEntryRegex + " @To (.*?): (.*)", RegexOptions.Compiled);
+            _fromWhisper = new Regex(RegexConstants.LogEntryRegex + " @From (.*?): (.*)", RegexOptions.Compiled);
+            _toWhisper = new Regex(RegexConstants.LogEntryRegex + " @To (.*?): (.*)", RegexOptions.Compiled);
             _guild = new Regex("<(.*)> (.*)", RegexOptions.Compiled);
         }
 

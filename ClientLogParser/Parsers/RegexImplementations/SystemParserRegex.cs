@@ -14,10 +14,10 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public SystemParserRegex()
         {
-            _maintenance = new Regex(RegexConstants._LogEntryRegex + " Abnormal disconnect: The realm is currently down for maintenance. Try again later.", RegexOptions.Compiled);
-            _newpatch = new Regex(RegexConstants._LogEntryRegex + " There has been a patch that you need to update to. Please restart Path of Exile.", RegexOptions.Compiled);
-            _reenterPw = new Regex(RegexConstants._LogEntryRegex + " You are logging in from a new location. Please re-enter your password.", RegexOptions.Compiled);
-            _serverdown = new Regex(RegexConstants._LogEntryRegex + " Abnormal disconnect: An unexpected disconnection occurred.", RegexOptions.Compiled);
+            _maintenance = new Regex(RegexConstants.LogEntryRegex + " Abnormal disconnect: The realm is currently down for maintenance. Try again later.", RegexOptions.Compiled);
+            _newpatch = new Regex(RegexConstants.LogEntryRegex + " There has been a patch that you need to update to. Please restart Path of Exile.", RegexOptions.Compiled);
+            _reenterPw = new Regex(RegexConstants.LogEntryRegex + " You are logging in from a new location. Please re-enter your password.", RegexOptions.Compiled);
+            _serverdown = new Regex(RegexConstants.LogEntryRegex + " Abnormal disconnect: An unexpected disconnection occurred.", RegexOptions.Compiled);
         }
 
         private readonly Regex _maintenance;

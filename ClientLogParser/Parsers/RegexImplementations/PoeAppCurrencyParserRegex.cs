@@ -13,7 +13,7 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public PoeAppCurrencyParserRegex()
         {
-            _tradeCurrency = new Regex($@"(.*)I'd like to buy your (.\d*) {RegexConstants._CurrencyRegex} for my {RegexConstants._CurrencyRegex} in {RegexConstants._LeagueNameRegex}\.(.*)", RegexOptions.Compiled);
+            _tradeCurrency = new Regex($@"(.*)I'd like to buy your (.\d*) {RegexConstants.CurrencyRegex} for my {RegexConstants.CurrencyRegex} in {RegexConstants.LeagueNameRegex}\.(.*)", RegexOptions.Compiled);
         }
 
         private readonly Regex _tradeCurrency;

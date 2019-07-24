@@ -219,7 +219,7 @@ namespace ClientLogParser
                         }
                         continue;
                     case IAreaChangeParser a:
-                        if (a.TryParse(entry, out DateTime time, out string newArea))
+                        if (a.TryParse(entry, out DateTime time, out var newArea))
                         {
                             OnAreaChange(new ChangeAreaEvent(time, newArea));
                             return;

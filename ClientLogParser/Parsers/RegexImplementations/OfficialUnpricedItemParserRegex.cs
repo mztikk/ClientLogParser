@@ -13,7 +13,7 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public OfficialUnpricedItemParserRegex()
         {
-            _tradeItem = new Regex($"(.*)Hi, I would like to buy your {RegexConstants._ItemNameRegex} in {RegexConstants._LeagueNameRegex} \\(stash tab \"(.*)\"; position: {RegexConstants._PositionRegex}\\)(.*)", RegexOptions.Compiled);
+            _tradeItem = new Regex($"(.*)Hi, I would like to buy your {RegexConstants.ItemNameRegex} in {RegexConstants.LeagueNameRegex} \\(stash tab \"(.*)\"; position: {RegexConstants.PositionRegex}\\)(.*)", RegexOptions.Compiled);
             _tradeGem = RegexConstants.OffiGemPattern;
             _tradeMap = RegexConstants.MapPattern;
         }

@@ -13,7 +13,7 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public PoeMapParserRegex()
         {
-            _tradeMap = new Regex($@"(.*)I'd like to exchange my {RegexConstants._TierRegex}: \({RegexConstants._ItemNameRegex}\) for your {RegexConstants._TierRegex}: \({RegexConstants._ItemNameRegex}\) in {RegexConstants._LeagueNameRegex}\.(.*)", RegexOptions.Compiled);
+            _tradeMap = new Regex($@"(.*)I'd like to exchange my {RegexConstants.TierRegex}: \({RegexConstants.ItemNameRegex}\) for your {RegexConstants.TierRegex}: \({RegexConstants.ItemNameRegex}\) in {RegexConstants.LeagueNameRegex}\.(.*)", RegexOptions.Compiled);
         }
 
         private readonly Regex _tradeMap;

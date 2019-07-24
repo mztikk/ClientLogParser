@@ -13,7 +13,7 @@ namespace ClientLogParser.Parsers.RegexImplementations
         /// </summary>
         public PoeAppItemParserRegex()
         {
-            _tradeItem = new Regex($"(.*)wtb {RegexConstants._ItemNameRegex} listed for {RegexConstants._CurrencyRegex} in {RegexConstants._LeagueNameRegex} \\(stash \"(.*)\"; {RegexConstants._PositionRegex}\\)(.*)", RegexOptions.Compiled);
+            _tradeItem = new Regex($"(.*)wtb {RegexConstants.ItemNameRegex} listed for {RegexConstants.CurrencyRegex} in {RegexConstants.LeagueNameRegex} \\(stash \"(.*)\"; {RegexConstants.PositionRegex}\\)(.*)", RegexOptions.Compiled);
             _tradeGem = RegexConstants.PoeAppGemPattern;
             _tradeMap = RegexConstants.MapPattern;
         }
