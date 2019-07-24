@@ -10,7 +10,7 @@ using ClientLogParser.Parsers;
 namespace ClientLogParser
 {
     /// <summary>
-    /// Provides methods and events for parsing/handling new clientlog entries.
+    /// Watches the ClientLog and provides methods and events for parsing/handling new entries
     /// </summary>
     public class Overseer : IDisposable
     {
