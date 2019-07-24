@@ -238,10 +238,13 @@ namespace ClientLogParser
 
         private void OnWhisper(object sender, Whisper e)
         {
+#if !DEBUG
+
             if (e.Sender == ParserConstants.Self)
             {
                 return;
             }
+#endif
 
             foreach (IParser parser in _parserCollection._parsers)
             {
