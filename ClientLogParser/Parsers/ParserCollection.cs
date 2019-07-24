@@ -25,6 +25,7 @@ namespace ClientLogParser.Parsers
                 new WhisperParserRegex(),
                 new OfficialSiteParserRegex(),
                 new PoeAppParserRegex(),
+                new PoeMapParserRegex(),
                 new AreaChangeParserRegex()
             });
 
