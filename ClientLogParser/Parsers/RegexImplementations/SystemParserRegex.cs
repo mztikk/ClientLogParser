@@ -18,12 +18,14 @@ namespace ClientLogParser.Parsers.RegexImplementations
             _newpatch = new Regex(RegexConstants.LogEntryRegex + " There has been a patch that you need to update to. Please restart Path of Exile.", RegexOptions.Compiled);
             _reenterPw = new Regex(RegexConstants.LogEntryRegex + " You are logging in from a new location. Please re-enter your password.", RegexOptions.Compiled);
             _serverdown = new Regex(RegexConstants.LogEntryRegex + " Abnormal disconnect: An unexpected disconnection occurred.", RegexOptions.Compiled);
+            _emailLock = new Regex(RegexConstants.LogEntryRegex + " Your account has been locked until you can provide an unlock code from your email.", RegexOptions.Compiled);
         }
 
         private readonly Regex _maintenance;
         private readonly Regex _newpatch;
         private readonly Regex _reenterPw;
         private readonly Regex _serverdown;
+        private readonly Regex _emailLock;
 
         /// <summary>
         /// Converts the log entry string to a <see cref="SystemMessage" />. The return value indicates success.
@@ -47,6 +49,11 @@ namespace ClientLogParser.Parsers.RegexImplementations
             if ((match = _reenterPw.Match(entry)).Success)
             {
                 systemMessage = new SystemMessage(SystemMessageType.ReenterPassword, DateTime.Parse(match.Groups[1].Value));
+                return true;
+            }
+            if ((match = _emailLock.Match(entry)).Success)
+            {
+                systemMessage = new SystemMessage(SystemMessageType.UnlockEmail, DateTime.Parse(match.Groups[1].Value));
                 return true;
             }
             if ((match = _serverdown.Match(entry)).Success)

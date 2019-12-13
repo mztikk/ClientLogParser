@@ -52,6 +52,11 @@ namespace ClientLogParser.Messages
         /// <summary>
         /// Server is down.
         /// </summary>
-        ServerDown
+        ServerDown,
+
+        /// <summary>
+        /// Account locked until unlock code from email provided
+        /// </summary>
+        UnlockEmail
     }
 }
